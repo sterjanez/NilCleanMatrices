@@ -1,4 +1,4 @@
-# Nil Clean Matrices
+# Nil-Clean Matrices
 An element a of an associative ring is called a nil-clean element if it is the sum of an idempotent e and a nilpotent q. The least index of nilpotence of q satisfying this property is called the nil-clean index of a.
 This repository contains programs for finding nil-clean elements in the full matrix ring M_n(F_2), for certain k. The most
 interesting are cases k = 3 and k = 4. See my math paper [Šter, On expressing matrices over Z_2 as the sum of an idempotent and a nilpotent, Linear Algebra and Its Applications, 2018] for more information.
