@@ -2,7 +2,7 @@
 // Author: Janez Ster
 // Date: March 2020
 
-// Description: Given a n×n matrix A over F_2 (for small n), the program finds
+// Description: Given a nÃ—n matrix A over F_2 (for small n), the program finds
 // idempotent matrices E (all or just one) over F_2 such that (A-E)^3=0.
 
 #include <iostream>
@@ -12,7 +12,7 @@
 
 constexpr auto MAX_DIM = 15; // maximal matrix size
 
-// Class describing m×n matrix over F_2.
+// Class describing mÃ—n matrix over F_2.
 class Matrix {
 public:
 
@@ -24,16 +24,16 @@ public:
 	// Create matrix of undefined dimensions and entries.
 	Matrix() {}
 
-	// Create m×n matrix with undefined entries.
+	// Create mÃ—n matrix with undefined entries.
 	Matrix(int m, int n) {
 		Height = m;
 		Width = n;
 	}
 
-	// Create n×n matrix with undefined entries.
+	// Create nÃ—n matrix with undefined entries.
 	Matrix(int n) : Matrix(n, n) {}
 
-	// Set a m×n matrix either to zero or a n×n matrix to identity.
+	// Set a mÃ—n matrix either to zero or a nÃ—n matrix to identity.
 	Matrix& operator =(const int& value) {
 		for (int i = 0; i < Height; i++)
 			for (int j = 0; j < Width; j++)
@@ -41,7 +41,7 @@ public:
 		return *this;
 	}
 
-	// Create matrix from a string. Example: "10,01" presents 2×2 identity.
+	// Create matrix from a string. Example: "10,01" presents 2Ã—2 identity.
 	Matrix(std::string s) {
 		auto pos = s.find(",");
 		if (pos == std::string::npos) {
@@ -57,7 +57,7 @@ public:
 				Entry[i][j] = (s[i * (Width + 1) + j] == '1');
 	}
 
-	// Convert matrix to string. Example: 2×2 identity is converted to "10,01".
+	// Convert matrix to string. Example: 2Ã—2 identity is converted to "10,01".
 	std::string ToString() const {
 		std::string s = "";
 		for (int i = 0; i < Height; i++) {
@@ -122,7 +122,7 @@ public:
 		return A;
 	}
 
-	// Trace of a m×n matrix.
+	// Trace of a mÃ—n matrix.
 	bool Trace() const {
 		bool value = false;
 		for (int i = 0; i < Height && i < Width; i++)
@@ -130,7 +130,7 @@ public:
 		return value;
 	}
 
-	// Submatrix of size m×n with the upper left corner at position (i0, j0).
+	// Submatrix of size mÃ—n with the upper left corner at position (i0, j0).
 	Matrix SubMatrix(int m, int n, int i0, int j0) const {
 		Matrix A(m, n);
 		for (int i = 0; i < m; i++)
@@ -343,8 +343,8 @@ public:
 	}
 };
 
-// Given n×n matrix A and 0<p<n, it finds idempotents E of rank p in block form
-// E=[I0;XI][IY;00][I0;XI] (with the upper left block of size p×p),
+// Given nÃ—n matrix A and 0<p<n, it finds idempotents E of rank p in block form
+// E=[I0;XI][IY;00][I0;XI] (with the upper left block of size pÃ—p),
 // such that (A-E)^3=0. Heights of block X are limited by heights[].
 // (E.g. heights[] = {0,0,...,0} means that X = 0 is the only option.)
 // Uses q-algorithm. If find_one is set, it finds only one idempotent.
@@ -429,13 +429,13 @@ ConsiderX:
 
 	// The upper right block Q12 changes with Y and
 	// must always satisfy Q21 Q12 Q21 = Q22^2 Q21 + Q22 Q21 Q11 + Q21 Q11^2
-	// (direct computation). This means that the upper right q×q block of Q12 must equal to:
+	// (direct computation). This means that the upper right qÃ—q block of Q12 must equal to:
 	Q12 = Q22 * Q22 * Q21 + Q22 * Q21 * Q11 + Q21 * Q11 * Q11;
 
 	// Hence Y is not arbitrary. The first two necessary conditions on X guarantee that Q12
-	// defined as above actually is zero outside the q×q block.
+	// defined as above actually is zero outside the qÃ—q block.
 
-	// Now we begin another loop where Q12 outside the q×q block runs through all possible cases.
+	// Now we begin another loop where Q12 outside the qÃ—q block runs through all possible cases.
 	// Qij are no longer maintained, but we maintain Q = [Qij] and Q^2 (both as arrays)
 	// and CounterY for changing the entries of Q21.
 
@@ -496,7 +496,7 @@ ConsiderY:
 IncreaseY:
 
 	// We are increasing Y (a.k.a. Q12). Position (i,j) of the bit to be changed is
-	// computed using CounterY. Recall that we are skipping the upper left q×q block.
+	// computed using CounterY. Recall that we are skipping the upper left qÃ—q block.
 	jmin = pplusq;
 	for (int i = 0; i != p; i++) {
 		if (i == q) jmin = p;
@@ -556,7 +556,7 @@ IncreaseX:
 	return idempotents;
 }
 
-// Given n×n matrix A, find idempotents E of given rank
+// Given nÃ—n matrix A, find idempotents E of given rank
 // such that (A-E)^3=0. If showsteps is chosen,
 // write steps in the procedure. If rank = -1 then look for all ranks. If
 // find_one is chosen then find just one E.
@@ -598,7 +598,7 @@ std::vector<Matrix> FindIdempotents(Matrix A, bool showsteps, int rank, bool fin
 }
 
 // Block diagonal matrix with diagonal blocks equal to companion matrices with given last columns.
-// Example: "11,10" gives block diagonal 4×4 matrix diag([01;11],[01;10]). Return false
+// Example: "11,10" gives block diagonal 4Ã—4 matrix diag([01;11],[01;10]). Return false
 // if illegal string.
 bool BlockCompanion(std::string columns, Matrix& A) {
 	auto pos = columns.find(",");
