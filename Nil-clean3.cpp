@@ -2,7 +2,7 @@
 // Author: Janez Ster
 // Last update: December 28th 2020
 
-// Description: Given a n×n matrix A over F_2 (for small n), the program finds
+// Description: Given a nÃ—n matrix A over F_2 (for small n), the program finds
 // idempotent matrices E over F_2 such that (A-E)^3=0.
 
 #include <iostream>
@@ -13,7 +13,7 @@
 
 const int MAX_DIM = 13; // maximal matrix size
 
-// Class describing m×n matrix over F_2.
+// Class describing mÃ—n matrix over F_2.
 class Matrix {
 
 public:
@@ -26,13 +26,13 @@ public:
 	// Row[0] = 001(bin) = 1 and Row[1] = 110(bin) = 6.
 	int Row[MAX_DIM];
 
-	// Create 0×0 matrix.
+	// Create 0Ã—0 matrix.
 	Matrix() {
 		Height = 0;
 		Width = 0;
 	}
 
-	// Create zero m×n matrix.
+	// Create zero mÃ—n matrix.
 	Matrix(int m, int n) {
 		Height = m;
 		Width = n;
@@ -53,7 +53,7 @@ public:
 			Row[i] &= ~(1 << j);
 	}
 
-	// Set a m×n matrix either to zero or a n×n matrix to identity.
+	// Set a mÃ—n matrix either to zero or a nÃ—n matrix to identity.
 	Matrix& operator =(int value) {
 		if (value)
 			for (int i = 0; i < Height; i++)
@@ -64,7 +64,7 @@ public:
 		return *this;
 	}
 
-	// Create matrix from a string. Example: "10,01" presents 2×2 identity.
+	// Create matrix from a string. Example: "10,01" presents 2Ã—2 identity.
 	Matrix(const std::string& s) {
 		std::size_t pos = s.find(",");
 		if (pos == std::string::npos) {
@@ -88,7 +88,7 @@ public:
 		}
 	}
 
-	// Convert matrix to string. Example: 2×2 identity is converted to "10,01".
+	// Convert matrix to string. Example: 2Ã—2 identity is converted to "10,01".
 	std::string ToString() const {
 		std::string s;
 		for (int i = 0; i < Height; i++) {
@@ -131,7 +131,7 @@ public:
 		return B;
 	}
 
-	// Add a scalar matrix to a n×n matrix.
+	// Add a scalar matrix to a nÃ—n matrix.
 	Matrix operator +(int value) const {
 		if (!value)
 			return *this;
@@ -165,7 +165,7 @@ public:
 		return !(*this == A);
 	}
 
-	// Check if a n×n matrix equals a scalar matrix.
+	// Check if a nÃ—n matrix equals a scalar matrix.
 	bool operator ==(int value) const {
 		if (value) {
 			for (int i = 0; i < Height; i++)
@@ -178,7 +178,7 @@ public:
 		return true;
 	}
 
-	// Check if a n×n matrix equals a scalar matrix.
+	// Check if a nÃ—n matrix equals a scalar matrix.
 	bool operator !=(int value) const {
 		return !(*this == value);
 	}
@@ -311,8 +311,8 @@ public:
 		V = Matrix(Width, Width) + 1;
 
 		// We maintain equality UAV = B, where B is of the form
-		// B = [I00;0X0] with I of size rank × rank
-		// and X of size (m - rank) × (maxrank - rank).
+		// B = [I00;0X0] with I of size rank Ã— rank
+		// and X of size (m - rank) Ã— (maxrank - rank).
 
 		rank = 0;
 		int maxrank = Width;
@@ -381,7 +381,7 @@ public:
 		return A;
 	}
 
-	// Decompose into blocks, with the upper left block of size m×n.
+	// Decompose into blocks, with the upper left block of size mÃ—n.
 	void Decompose(int m, int n, Matrix& A11, Matrix& A12, Matrix& A21, Matrix& A22) const {
 		A11 = SubMatrix(0, 0, m, n);
 		A12 = SubMatrix(0, n, m, Width);
@@ -409,7 +409,7 @@ public:
 
 typedef unsigned long long Matrix64;
 
-// Constants and methods to be used in manipulations with 8×8 matrices
+// Constants and methods to be used in manipulations with 8Ã—8 matrices
 // presented by a single 64-bit unsigned integer (matrices of type Matrix64).
 namespace Mat64 {
 
@@ -419,7 +419,7 @@ namespace Mat64 {
 	// First row and column selector constants.
 	constexpr Matrix64 FirstRow = 0xFF, FirstCol = 0x0101010101010101;
 
-	// Convert m×n Matrix (where m,n <= 8) to Matrix64.
+	// Convert mÃ—n Matrix (where m,n <= 8) to Matrix64.
 	Matrix64 ToMatrix64(const Matrix& A) {
 		Matrix64 matrix = 0;
 		for (int i = 0; i < A.Height; i++)
@@ -427,7 +427,7 @@ namespace Mat64 {
 		return matrix;
 	}
 
-	// Convert the upper left m×n block of Matrix64 to Matrix.
+	// Convert the upper left mÃ—n block of Matrix64 to Matrix.
 	Matrix ToMatrix(Matrix64 A, int m, int n) {
 		Matrix B(m, n);
 		int selector = (1 << n) - 1;
@@ -436,7 +436,7 @@ namespace Mat64 {
 		return B;
 	}
 
-	// Identity n×n matrix.
+	// Identity nÃ—n matrix.
 	Matrix64 Identity(int n) {
 		Matrix64 A = 0;
 		for (int i = 0; i < n; i++)
@@ -487,7 +487,7 @@ namespace Mat64 {
 		return !B;
 	}
 
-	// Find rank of a m×n matrix A and invertible U (m×m) and V (n×n) such that UAV=[I0;00].
+	// Find rank of a mÃ—n matrix A and invertible U (mÃ—m) and V (nÃ—n) such that UAV=[I0;00].
 	void Diagonalize(Matrix64 A, int m, int n, int& rank, Matrix64& U, Matrix64& V) {
 		U = 0;
 		for (int i = 0; i < m; i++)
@@ -496,8 +496,8 @@ namespace Mat64 {
 		for (int i = 0; i < n; i++)
 			V ^= 1ull << (i + N[i]);
 
-		// We maintain U, V and the matrix UAV = [I00;0X0;000] with I of size rank × rank
-		// and X of size (m - rank) × (maxrank - rank).
+		// We maintain U, V and the matrix UAV = [I00;0X0;000] with I of size rank Ã— rank
+		// and X of size (m - rank) Ã— (maxrank - rank).
 
 		rank = 0;
 		int maxrank = n;
@@ -542,7 +542,7 @@ namespace Mat64 {
 		}
 	}
 
-	// Inverse of n×n matrix.
+	// Inverse of nÃ—n matrix.
 	Matrix64 Inv(Matrix64 A, int n) {
 		int rank;
 		Matrix64 U, V;
@@ -550,7 +550,7 @@ namespace Mat64 {
 		return Product(V, U);
 	}
 
-	// Decompose Matrix into four Matrix64 matrices, with the upper left block of size m×n.
+	// Decompose Matrix into four Matrix64 matrices, with the upper left block of size mÃ—n.
 	void Decompose(const Matrix& A, int m, int n, Matrix64& A11, Matrix64& A12, Matrix64& A21, Matrix64& A22) {
 		Matrix mA11, mA12, mA21, mA22;
 		A.Decompose(m, n, mA11, mA12, mA21, mA22);
@@ -560,7 +560,7 @@ namespace Mat64 {
 		A22 = ToMatrix64(mA22);
 	}
 
-	// Assemble four blocks into a single m×n matrix, where the upper left block is of size i×j.
+	// Assemble four blocks into a single mÃ—n matrix, where the upper left block is of size iÃ—j.
 	Matrix Assemble(int m, int n, int i, int j, Matrix64 A11, Matrix64 A12, Matrix64 A21, Matrix64 A22) {
 		Matrix mA11, mA12, mA21, mA22;
 		mA11 = Mat64::ToMatrix(A11, i, j);
@@ -666,8 +666,8 @@ public:
 
 typedef std::vector<Matrix> Matrices;
 
-// Given n×n matrix A and 0<p<n, find idempotents E of rank p in block form
-// E=[I0;XI][IY;00][I0;XI] (with the upper left block of size p×p),
+// Given nÃ—n matrix A and 0<p<n, find idempotents E of rank p in block form
+// E=[I0;XI][IY;00][I0;XI] (with the upper left block of size pÃ—p),
 // such that (A-E)^3=0. Heights of block X are limited by heights[].
 // (E.g. heights[] = {0,0,...,0} means that X = 0 is the only option.)
 // If find_one is set, find only one idempotent. Append idempotents to the vector idempotents.
@@ -803,8 +803,8 @@ void FindIdempotents64(const Matrix& A, int p, int heights[MAX_DIM], bool find_o
 	}
 }
 
-// Given n×n matrix A and 0<p<n, find idempotents E of rank p in block form
-// E=[I0;XI][IY;00][I0;XI] (with the upper left block of size p×p),
+// Given nÃ—n matrix A and 0<p<n, find idempotents E of rank p in block form
+// E=[I0;XI][IY;00][I0;XI] (with the upper left block of size pÃ—p),
 // such that (A-E)^3=0. Heights of block X are limited by heights[].
 // (E.g. heights[] = {0,0,...,0} means that X = 0 is the only option.)
 // If find_one is set, find only one idempotent. Append idempotents to the vector idempotents.
@@ -902,7 +902,7 @@ void FindIdempotents(const Matrix& A, int p, int heights[MAX_DIM], bool find_one
 	}
 }
 
-// Given n×n matrix A and a subset M of {0,...,n-1}, find idempotents E
+// Given nÃ—n matrix A and a subset M of {0,...,n-1}, find idempotents E
 // such that (A-E)^3=0 and such that P^T*E*P is of the form [I0;XI][IY;00][I0;XI],
 // where P is a permuation matrix associated with M. If find_one is set,
 // it finds only one idempotent. Append idempotents to the vector idempotents.
@@ -925,7 +925,7 @@ void FindIdempotents(const Matrix& A, const Subset& M, bool find_one, Matrices& 
 		idempotents.push_back(P * E * P.Transpose());
 }
 
-// Given n×n matrix A, find idempotents E such that (A-E)^3=0.
+// Given nÃ—n matrix A, find idempotents E such that (A-E)^3=0.
 // Write steps in the procedure. Begin with the subset M0.
 // If find_one is set, then find just one E.
 // Append idempotents to the vector idempotents.
@@ -957,7 +957,7 @@ Matrix CompanionMatrix(const std::string& coefficients, bool modified = false) {
 
 // Block diagonal matrix with diagonal companion matrices.
 // Parameter "m" determines if a given block is modified or not.
-// Example: "11,m10" gives block diagonal 4×4 matrix diag([01;11],[11;10]).
+// Example: "11,m10" gives block diagonal 4Ã—4 matrix diag([01;11],[11;10]).
 Matrix BlockCompanionMatrix(const std::string& coefficients) {
 	std::size_t pos = coefficients.find(",");
 	if (pos == std::string::npos) {
