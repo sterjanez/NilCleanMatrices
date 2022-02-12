@@ -20,6 +20,8 @@ An extended version of Nil-clean3.cpp. Contains various additional methods: rand
 ## Nil-clean4.exe
 Executable file for the file Nil-clean4.cpp.
 ## NilClean5/
-Source files for the latest version of the program. Contains all features of previous version and much more, including parallelized algorithm (for multiple CPU).
+Source files for the latest version of the program. Contains all features of previous version and much more, including parallelized algorithm (for multiple CPU). To build the program, either:
+- run with PowerShell the file *build.ps1* (Windows system), or
+- run with CMake the file *CMakeLists.txt* in the main directory.
 
 Last update: 12th February 2022
