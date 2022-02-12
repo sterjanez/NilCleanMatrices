@@ -19,5 +19,7 @@ Executable file for the file Nil-clean3.cpp.
 An extended version of Nil-clean3.cpp. Contains various additional methods: random heuristics, searching for matrices with common entries or common rows, finding irreducible polynomials over F_2 etc.
 ## Nil-clean4.exe
 Executable file for the file Nil-clean4.cpp.
+## NilClean5/
+Source files for the latest version of the program. Contains all features of previous version and much more, including parallelized algorithm (for multiple CPU).
 
-Last update: 20 March 2021
+Last update: 12th February 2022
